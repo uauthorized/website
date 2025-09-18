@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civil Rights Movements: A Comparative Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application is designed as a thematic deep-dive comparing the 1960s Civil Rights Movement (CRM) with the Black Lives Matter (BLM) movement. Instead of a linear report, it uses distinct, scrollable sections (Introduction, Goals, Tactics, Organization, Financial Scrutiny, Synthesis) to allow users to explore specific points of comparison. This structure facilitates a nuanced understanding, directly addressing the core question of whether BLM is a continuation or a new initiative. The user flow is guided by a top navigation bar, encouraging exploration of different facets of the movements, culminating in the data-driven 'Financial Scrutiny' section which addresses the user's specific prompt. This design was chosen for its clarity and ability to present complex, comparative information in a digestible, interactive format. -->
+    <!-- Visualization & Content Choices: Report Info: Core tenets and tactics of CRM & BLM from textbook/conversation. Goal: Compare/Inform. Viz/Method: Side-by-side text blocks and interactive cards. Interaction: Clicking cards reveals detailed descriptions. Justification: Allows for direct comparison of complex ideas. | Report Info: Financial data of BLMGNF from WPDE article ($90M raised, $29.7M to charity). Goal: Inform/Analyze. Viz/Method: Donut Chart. Interaction: Hovering over segments shows tooltips with financial details. Justification: Provides a powerful, immediate visual representation of the controversial fund allocation, making the data easy to understand. Library: Chart.js (Canvas). -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #333;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #D97706; /* amber-600 */
+            border-bottom-color: #D97706;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: auto;
+            max-height: 450px;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-xl font-bold text-stone-700">Comparative Analysis</h1>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#introduction" class="nav-link text-sm font-medium text-stone-600 border-b-2 border-transparent pb-1">Introduction</a>
+                    <a href="#goals" class="nav-link text-sm font-medium text-stone-600 border-b-2 border-transparent pb-1">Goals</a>
+                    <a href="#tactics" class="nav-link text-sm font-medium text-stone-600 border-b-2 border-transparent pb-1">Tactics</a>
+                    <a href="#organization" class="nav-link text-sm font-medium text-stone-600 border-b-2 border-transparent pb-1">Organization</a>
+                    <a href="#finance" class="nav-link text-sm font-medium text-stone-600 border-b-2 border-transparent pb-1">Financial Scrutiny</a>
+                    <a href="#synthesis" class="nav-link text-sm font-medium text-stone-600 border-b-2 border-transparent pb-1">Synthesis</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="introduction" class="mb-24 text-center">
+            <h2 class="text-4xl font-bold text-amber-700 mb-4">A Tale of Two Movements</h2>
+            <p class="max-w-3xl mx-auto text-lg text-stone-600">
+                Is the Black Lives Matter movement a modern continuation of the 1960s Civil Rights Movement, or a fundamentally new initiative? This analysis explores the core goals, tactics, and structures of both movements to understand their connections and divergences. The conversation between Alicia and Mark highlights a common point of inquiry: while the fight for racial equality persists, the methods and organizational landscapes have evolved significantly.
+            </p>
+        </section>
+
+        <section id="goals" class="mb-24">
+            <h3 class="text-3xl font-bold text-center mb-2">The Core Mission</h3>
+            <p class="text-center text-stone-500 max-w-2xl mx-auto mb-12">While both movements strive for racial equality and justice, their specific objectives were shaped by the pressing issues of their time. The Civil Rights Movement targeted legally sanctioned segregation, whereas Black Lives Matter confronts systemic racism in modern policing and criminal justice.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-md border border-stone-200">
+                    <h4 class="text-2xl font-semibold mb-4 text-amber-800">Civil Rights Movement (1950s-60s)</h4>
+                    <ul class="space-y-3 list-disc list-inside text-stone-700">
+                        <li><strong>End Legal Segregation:</strong> Dismantle "separate but equal" laws (Jim Crow) in public spaces like schools, transportation, and restaurants.</li>
+                        <li><strong>Secure Voting Rights:</strong> Overcome barriers like poll taxes and literacy tests designed to disenfranchise African Americans, culminating in the Voting Rights Act of 1965.</li>
+                        <li><strong>Eliminate Employment Discrimination:</strong> Fight for equal opportunities in the workplace, a key component of the Civil Rights Act of 1964.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-md border border-stone-200">
+                    <h4 class="text-2xl font-semibold mb-4 text-amber-800">Black Lives Matter (2013-Present)</h4>
+                    <ul class="space-y-3 list-disc list-inside text-stone-700">
+                        <li><strong>End Police Brutality:</strong> Bring national attention to and demand accountability for the deaths of Black individuals at the hands of law enforcement.</li>
+                        <li><strong>Challenge Systemic Racism:</strong> Address institutional inequalities in the criminal justice system, from racial profiling to mass incarceration.</li>
+                        <li><strong>Amplify Black Voices:</strong> Create campaigns and platforms that center Black experiences and advocate for political, economic, and social liberation.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="tactics" class="mb-24">
+             <h3 class="text-3xl font-bold text-center mb-2">Strategies for Change</h3>
+             <p class="text-center text-stone-500 max-w-2xl mx-auto mb-12">Both movements utilize direct action to challenge the status quo. However, the tools and platforms have changed dramatically, with BLM leveraging social media to achieve a global reach that was unimaginable in the 1960s.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h5 class="font-bold text-lg mb-2 text-amber-700">Nonviolent Civil Disobedience</h5>
+                    <p class="text-sm text-stone-600">A cornerstone of the CRM, this involved peacefully breaking unjust laws. Sit-ins at segregated lunch counters and the Montgomery Bus Boycott are prime examples.</p>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h5 class="font-bold text-lg mb-2 text-amber-700">Marches and Rallies</h5>
+                    <p class="text-sm text-stone-600">Both movements have used mass mobilization to demonstrate solidarity and pressure political leaders. The 1963 March on Washington is iconic, while BLM organized massive global protests in 2020.</p>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h5 class="font-bold text-lg mb-2 text-amber-700">Legal Challenges</h5>
+                     <p class="text-sm text-stone-600">Organizations like the NAACP were pivotal for the CRM, using the court system to dismantle segregation, famously in <em class="italic">Brown v. Board of Education</em>.</p>
+                </div>
+                 <div class="card bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h5 class="font-bold text-lg mb-2 text-amber-700">Boycotts</h5>
+                     <p class="text-sm text-stone-600">Economic pressure was a powerful tool for the CRM. Today, this tactic has evolved into calls for boycotts of corporations perceived as complicit in racial injustice.</p>
+                </div>
+                 <div class="card bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h5 class="font-bold text-lg mb-2 text-amber-700">Digital Activism</h5>
+                    <p class="text-sm text-stone-600">Unique to BLM, hashtags like #BlackLivesMatter organize protests, disseminate information, and share firsthand accounts of police encounters, bypassing traditional media gatekeepers.</p>
+                </div>
+                <div class="card bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                    <h5 class="font-bold text-lg mb-2 text-amber-700">High-Profile Campaigns</h5>
+                    <p class="text-sm text-stone-600">BLM excels at creating media campaigns that focus public attention on specific cases of injustice, building on the CRM's strategy of highlighting individual stories to illustrate a broader problem.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="organization" class="mb-24">
+            <h3 class="text-3xl font-bold text-center mb-2">Leadership and Structure</h3>
+            <p class="text-center text-stone-500 max-w-2xl mx-auto mb-12">Perhaps the most significant difference lies in organizational structure. The CRM was largely defined by centralized, often male-dominated leadership, while BLM operates as a decentralized network with an emphasis on inclusive, local leadership.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-md border border-stone-200">
+                    <h4 class="text-2xl font-semibold mb-4 text-amber-800">Civil Rights Movement</h4>
+                     <p class="text-stone-700">Characterized by hierarchical organizations like the Southern Christian Leadership Conference (SCLC) and the NAACP. Charismatic leaders such as Martin Luther King Jr. served as national spokespeople, unifying the movement's message and direction.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-md border border-stone-200">
+                    <h4 class="text-2xl font-semibold mb-4 text-amber-800">Black Lives Matter</h4>
+                     <p class="text-stone-700">Operates as a decentralized network of local chapters. This "leader-full" model is designed to empower local organizers and prevent the movement from being derailed by targeting a single leader. The national entity, the Black Lives Matter Global Network Foundation (BLMGNF), provides resources but does not dictate local actions.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="finance" class="mb-24 bg-stone-100 py-16 rounded-lg">
+            <h3 class="text-3xl font-bold text-center mb-2">Financial Scrutiny: A Point of Divergence</h3>
+            <p class="text-center text-stone-500 max-w-2xl mx-auto mb-12">While the core message for racial justice resonates widely, the financial management of the Black Lives Matter Global Network Foundation (BLMGNF) has drawn criticism. This distinguishes the modern movement, where fundraising and organizational transparency are subject to intense public and media scrutiny in the digital age.</p>
+            <div class="grid lg:grid-cols-2 gap-8 items-center">
+                 <div class="px-4">
+                    <h4 class="text-xl font-semibold mb-4 text-stone-800">BLMGNF 2020 Donations Breakdown</h4>
+                    <p class="text-stone-600 mb-4">In 2020, following the murder of George Floyd, the BLMGNF raised approximately $90 million. According to news reports and its own filings, the allocation of these funds became a source of controversy.</p>
+                    <ul class="space-y-2 text-stone-700">
+                       <li class="flex items-start">
+                           <span class="text-green-600 font-bold w-28 shrink-0">~33% Distributed:</span>
+                           <span>Approximately $29.7 million was granted to various charities, partner organizations, and local BLM chapters.</span>
+                       </li>
+                        <li class="flex items-start">
+                           <span class="text-red-600 font-bold w-28 shrink-0">~67% Retained:</span>
+                           <span>The remaining majority of funds were retained for operating expenses, investments, consulting fees, and other costs, with reports highlighting multi-million dollar payments to individuals connected to the founders. The foundation later reported a deficit of over $8.5 million.</span>
+                       </li>
+                    </ul>
+                     <p class="text-xs text-stone-400 mt-4">Source: Analysis based on reports from WPDE and other news outlets regarding BLMGNF's 2020 financial disclosures.</p>
+                </div>
+                <div>
+                    <div class="chart-container">
+                        <canvas id="financeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="synthesis" class="mb-12">
+            <h3 class="text-3xl font-bold text-center mb-2">Conclusion: Continuation or New Chapter?</h3>
+            <p class="text-center text-stone-500 max-w-3xl mx-auto mb-12">The debate over whether Black Lives Matter is a continuation of the Civil Rights Movement is complex. The evidence suggests it is both. This interactive analysis allows you to explore the nuances and decide for yourself based on the information presented.</p>
+            <div class="bg-white p-8 rounded-lg shadow-lg border border-stone-200 max-w-4xl mx-auto">
+                 <h4 class="text-2xl font-semibold mb-4 text-amber-800">Synthesizing the Movements</h4>
+                 <div class="space-y-4 text-stone-700">
+                    <p>
+                        <strong class="font-semibold text-stone-800">A Continuation of the Struggle:</strong> The spirit and fundamental goal of BLM—the demand for Black people to be treated with dignity and to live free from systemic oppression—is a direct continuation of the centuries-long struggle for civil rights. The grievances have evolved from Jim Crow laws to issues of police brutality and mass incarceration, but the underlying fight for equality remains the same. The use of protests, boycotts, and direct action clearly echoes the tactics of the 1960s.
+                    </p>
+                    <p>
+                        <strong class="font-semibold text-stone-800">A Fundamentally Different Organization:</strong> Where BLM diverges sharply is in its structure and the context in which it operates. Its decentralized, technology-driven, and inclusive nature stands in contrast to the more hierarchical CRM. Furthermore, the controversies surrounding the BLMGNF's finances highlight a modern challenge. This allows for a distinction: one can support the <em class="italic">movement's meaning</em>—the decentralized, grassroots call for justice—while remaining critical of the <em class="italic">national organization's</em> financial practices and leadership decisions.
+                    </p>
+                    <p class="pt-4 border-t border-stone-200">
+                        Ultimately, BLM can be seen as the next chapter in the Civil Rights Movement, adapted for the 21st century with new tools, new challenges, and a new organizational philosophy.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            function changeActiveLink() {
+                let index = sections.length;
+                while(--index && window.scrollY + 100 < sections[index].offsetTop) {}
+                
+                navLinks.forEach((link) => link.classList.remove('active'));
+                if(index > -1 && navLinks[index]){
+                   navLinks[index].classList.add('active');
+                }
+            }
+
+            changeActiveLink();
+            window.addEventListener('scroll', changeActiveLink);
+
+            const ctx = document.getElementById('financeChart').getContext('2d');
+            const financeChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Grants to Orgs/Chapters', 'Retained for Operations, Investments, etc.'],
+                    datasets: [{
+                        data: [33, 67],
+                        backgroundColor: [
+                            '#16A34A', // green-600
+                            '#DC2626'  // red-600
+                        ],
+                        borderColor: [
+                            '#FDFBF8',
+                            '#FDFBF8'
+                        ],
+                        borderWidth: 4,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#57534E', // stone-600
+                                font: {
+                                    size: 14,
+                                    family: "'Inter', sans-serif"
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + '%';
+                                    }
+                                    return label;
+                                }
+                            },
+                            backgroundColor: '#292524', // stone-800
+                            titleFont: { size: 16 },
+                            bodyFont: { size: 14 },
+                            padding: 10,
+                            cornerRadius: 4,
+                            displayColors: false
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
